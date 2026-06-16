@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Ultra-Luxury Custom Styles -->
+<style>
+    /* Smooth Scroll Reveal */
+    .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+    }
+    .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Editorial Drop Cap for the first letter of the description */
+    .editorial-text::first-letter {
+        font-family: 'Playfair Display', Georgia, serif;
+        float: left;
+        font-size: 5rem;
+        line-height: 4.5rem;
+        padding-top: 0.25rem;
+        padding-right: 0.75rem;
+        color: #043927; /* emeraldDeep */
+        font-weight: 700;
+    }
+
+    /* Remove default input focus rings for the boutique form */
+    .boutique-input:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    
+    /* Custom Scrollbar for Gallery */
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+
+<!-- Cinematic Hero Header -->
+<section class="relative h-[75vh] md:h-[85vh] lg:h-[90vh] w-full flex items-end pb-32 md:pb-40 overflow-hidden">
+    
+    <!-- Video, Image & Ambient Zoom -->
+    <div class="absolute inset-0 z-0">
+        {% if package.video %}
+            <video autoplay loop muted playsinline class="w-full h-full object-cover transform scale-110 animate-[slowZoom_30s_ease-in-out_infinite_alternate]">
+                <source src="{{ package.video.url }}" type="video/mp4">
+            </video>
+        {% elif package.cover_image %}
+            <img src="{{ package.cover_image.url }}" alt="{{ package.title }}" class="w-full h-full object-cover transform scale-110 animate-[slowZoom_30s_ease-in-out_infinite_alternate]">
+        {% else %}
+            <div class="w-full h-full bg-emeraldDeep"></div>
+        {% endif %}
+        
+        <!-- Premium Vignette & Gradients -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/10 mix-blend-overlay"></div>
+    </div>
+
+    <!-- Hero Content (Fluid Typography & Breadcrumbs) -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 w-full reveal-on-scroll is-visible">
+        <div class="max-w-4xl">
+            
+            <!-- Breadcrumbs -->
+            <nav class="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.3em] text-white/60 mb-6 flex items-center space-x-2">
+                <a href="{% url 'tours:home' %}" class="hover:text-goldAccent transition-colors">Home</a>
+                <span>/</span>
+                <a href="{% url 'tours:packages_list' %}" class="hover:text-goldAccent transition-colors">Experiences</a>
+                <span>/</span>
+                <span class="text-goldAccent">{{ package.category.name }}</span>
+            </nav>
+
+            <span class="inline-block backdrop-blur-md bg-white/10 border border-white/20 text-goldAccent text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-6 sm:mb-8 shadow-2xl">
+                {{ package.category.name }} Exclusives
+            </span>
+            <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif font-bold text-white mb-8 leading-[1.05] tracking-tighter drop-shadow-2xl">
+                {{ package.title }}
+            </h1>
+            
+            <div class="flex flex-wrap items-center text-beigeWarm font-light tracking-widest space-x-6 sm:space-x-10 text-sm sm:text-base md:text-lg">
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-goldAccent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>{{ package.duration_days }} Days</span>
+                </div>
+                <div class="flex items-center mt-3 sm:mt-0">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-goldAccent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>From ₹{{ package.price }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Overlapping Editorial Content & Sticky Form -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pb-32 -mt-20 md:-mt-28 lg:-mt-32 relative z-20">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+        
+        <!-- Left Column: Editorial Details -->
+        <div class="lg:col-span-7 xl:col-span-8 space-y-12 md:space-y-16">
+            
+            <!-- 1. Main Itinerary Card -->
+            <div class="bg-beigeWarm p-8 sm:p-12 md:p-16 rounded-[2rem] md:rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] border border-white relative overflow-hidden reveal-on-scroll">
+                <h3 class="text-[10px] md:text-xs font-bold text-emeraldLight uppercase tracking-[0.3em] mb-4 md:mb-6">Journey Overview</h3>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-emeraldDeep mb-8 md:mb-12 leading-tight">The Experience</h2>
+                
+                <!-- Editorial Text with Drop Cap -->
+                <div class="editorial-text text-base sm:text-lg text-gray-700 font-light leading-relaxed sm:leading-loose whitespace-pre-line relative z-10">
+                    {{ package.description }}
+                </div>
+            </div>
+
+            <!-- 2. Signature Inclusions (Meaningful Details) -->
+            <div class="reveal-on-scroll">
+                <h3 class="text-[10px] md:text-xs font-bold text-emeraldLight uppercase tracking-[0.3em] mb-4 pl-4">Zam Zam Standard</h3>
+                <h2 class="text-3xl font-serif font-bold text-emeraldDeep mb-8 pl-4">Signature Inclusions</h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div class="bg-white p-6 md:p-8 rounded-[2rem] border border-gray-100 flex items-start shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-goldAccent/10 rounded-full flex items-center justify-center shrink-0 mr-4">
+                            <svg class="w-6 h-6 text-goldAccent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-emeraldDeep text-sm uppercase tracking-widest mb-2">Flights & Visa</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed font-light">Round-trip premium flights and comprehensive visa processing included.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 md:p-8 rounded-[2rem] border border-gray-100 flex items-start shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-emeraldDeep/5 rounded-full flex items-center justify-center shrink-0 mr-4">
+                            <svg class="w-6 h-6 text-emeraldDeep" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-emeraldDeep text-sm uppercase tracking-widest mb-2">Premium Stays</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed font-light">Carefully selected luxury accommodations ensuring ultimate comfort.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 md:p-8 rounded-[2rem] border border-gray-100 flex items-start shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-goldAccent/10 rounded-full flex items-center justify-center shrink-0 mr-4">
+                            <svg class="w-6 h-6 text-goldAccent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-emeraldDeep text-sm uppercase tracking-widest mb-2">Guided Tours</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed font-light">Expert Mutawwifs and certified local guides for profound experiences.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 md:p-8 rounded-[2rem] border border-gray-100 flex items-start shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-emeraldDeep/5 rounded-full flex items-center justify-center shrink-0 mr-4">
+                            <svg class="w-6 h-6 text-emeraldDeep" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-emeraldDeep text-sm uppercase tracking-widest mb-2">VIP Transfers</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed font-light">Private or luxury coach ground transportation throughout the trip.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Accommodations Card -->
+            {% if package.hotel_details %}
+            <div class="bg-white p-8 sm:p-12 md:p-16 rounded-[2rem] md:rounded-[3rem] shadow-xl border border-gray-100 relative overflow-hidden reveal-on-scroll">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-goldAccent/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+                
+                <div class="relative z-10">
+                    <h3 class="text-[10px] md:text-xs font-bold text-emeraldLight uppercase tracking-[0.3em] mb-4 md:mb-6">Rest & Rejuvenate</h3>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-emeraldDeep mb-8 md:mb-12 leading-tight">Accommodation</h2>
+                    
+                    <div class="text-base sm:text-lg text-gray-600 font-light leading-relaxed sm:leading-loose whitespace-pre-line pl-6 border-l-2 border-goldAccent/50">
+                        {{ package.hotel_details }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- 4. Dynamic Photo Gallery (Pulls from PackageImage model) -->
+            {% if package.gallery_images.all %}
+            <div class="reveal-on-scroll">
+                <h3 class="text-[10px] md:text-xs font-bold text-emeraldLight uppercase tracking-[0.3em] mb-4 pl-4">A Glimpse</h3>
+                <h2 class="text-3xl font-serif font-bold text-emeraldDeep mb-8 pl-4">Visual Journey</h2>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {% for image in package.gallery_images.all %}
+                    <div class="aspect-square rounded-[2rem] overflow-hidden group shadow-md hover:shadow-xl transition-all duration-500">
+                        <img src="{{ image.image.url }}" alt="Gallery Image" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+        </div>
+
+        <!-- Right Column: Sticky VIP Concierge Form -->
+        <div class="lg:col-span-5 xl:col-span-4 relative reveal-on-scroll delay-200">
+            <div class="sticky top-32 bg-emeraldDeep px-8 py-10 md:px-10 md:py-14 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-white/5 overflow-hidden">
+                
+                <!-- Ambient Glow -->
+                <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-goldAccent/20 rounded-full blur-[80px] pointer-events-none"></div>
+
+                <div class="relative z-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-[1px] bg-goldAccent mr-4"></div>
+                        <span class="text-goldAccent tracking-[0.3em] text-[10px] sm:text-xs uppercase font-bold">VIP Concierge</span>
+                    </div>
+                    <h3 class="text-3xl sm:text-4xl font-serif font-bold text-white mb-4 leading-tight">Request <br/>an Itinerary</h3>
+                    <p class="text-sm text-beigeWarm/60 font-light mb-10 leading-relaxed">Our specialists will contact you directly to curate and finalize your personal travel arrangements.</p>
+
+                    <form action="{% url 'tours:submit_inquiry' package.pk %}" method="POST" class="space-y-8">
+                        {% csrf_token %}
+                        
+                        <div class="relative group">
+                            <label class="block text-[9px] font-bold text-white/50 uppercase tracking-[0.3em] mb-1 transition-colors group-focus-within:text-goldAccent">Full Name</label>
+                            <input type="text" name="customer_name" required 
+                                   class="boutique-input w-full bg-transparent border-b border-white/20 py-2 text-white placeholder-white/20 text-sm sm:text-base font-light focus:border-goldAccent transition-colors" 
+                                   placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="relative group">
+                            <label class="block text-[9px] font-bold text-white/50 uppercase tracking-[0.3em] mb-1 transition-colors group-focus-within:text-goldAccent">Mobile Number</label>
+                            <input type="tel" name="phone_number" required 
+                                   class="boutique-input w-full bg-transparent border-b border-white/20 py-2 text-white placeholder-white/20 text-sm sm:text-base font-light focus:border-goldAccent transition-colors" 
+                                   placeholder="+91 XXXXX XXXXX">
+                        </div>
+                        
+                        <div class="relative group">
+                            <label class="block text-[9px] font-bold text-white/50 uppercase tracking-[0.3em] mb-1 transition-colors group-focus-within:text-goldAccent">Email Address</label>
+                            <input type="email" name="email" 
+                                   class="boutique-input w-full bg-transparent border-b border-white/20 py-2 text-white placeholder-white/20 text-sm sm:text-base font-light focus:border-goldAccent transition-colors" 
+                                   placeholder="Optional">
+                        </div>
+                        
+                        <div class="relative group">
+                            <label class="block text-[9px] font-bold text-white/50 uppercase tracking-[0.3em] mb-1 transition-colors group-focus-within:text-goldAccent">Special Requests</label>
+                            <textarea name="message" rows="2" 
+                                      class="boutique-input w-full bg-transparent border-b border-white/20 py-2 text-white placeholder-white/20 text-sm sm:text-base font-light focus:border-goldAccent transition-colors resize-none" 
+                                      placeholder="Dates, passenger count..."></textarea>
+                        </div>
+                        
+                        <button type="submit" 
+                                class="w-full relative overflow-hidden group bg-goldAccent text-emeraldDeep font-bold py-4 sm:py-5 rounded-full hover:shadow-[0_10px_30px_rgba(197,168,128,0.3)] transition-all duration-500 uppercase tracking-[0.3em] text-[10px] sm:text-xs mt-4">
+                            <span class="relative z-10 transition-colors duration-500 group-hover:text-white">Submit Request</span>
+                            <div class="absolute inset-0 h-full w-full bg-emeraldLight transform scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-in-out z-0"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Advanced Intersection Observer for Smooth Reveals -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        revealElements.forEach(el => observer.observe(el));
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Extended Styles for Advanced Scroll Reveals -->
+<style>
+    .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        will-change: opacity, transform;
+    }
+    .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* Extended Stagger Delays */
+    .delay-100 { transition-delay: 100ms; }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-300 { transition-delay: 300ms; }
+    .delay-400 { transition-delay: 400ms; }
+    .delay-500 { transition-delay: 500ms; }
+</style>
+
+<!-- 1. HERO SECTION (Existing - Perfected) -->
+<section class="relative text-beigeWarm py-40 md:py-64 px-6 overflow-hidden min-h-[95vh] flex flex-col justify-center">
+    <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 scale-105 transform origin-center animate-[slowZoom_20s_ease-in-out_infinite_alternate]">
+        <source src="{% static 'hero.mp4' %}" type="video/mp4">
+    </video>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-emeraldDeep z-0 pointer-events-none"></div>
+    
+    <div class="max-w-5xl mx-auto text-center relative z-10 reveal-on-scroll is-visible">
+        <span class="text-goldAccent tracking-[0.3em] text-xs md:text-sm uppercase font-bold backdrop-blur-xl bg-white/5 border border-white/10 px-8 py-3 rounded-full mb-10 inline-block shadow-2xl">
+            A Journey of a Lifetime
+        </span>
+        <h1 class="text-6xl md:text-8xl lg:text-9xl font-serif font-bold mt-2 mb-8 leading-[1.1] tracking-tighter drop-shadow-2xl text-transparent bg-clip-text bg-gradient-to-b from-white to-beigeDark">
+            Discover the World <br/>
+            <span class="text-goldAccent italic font-light drop-shadow-none bg-none tracking-normal">&</span> 
+            Your Soul
+        </h1>
+        <p class="text-xl md:text-2xl text-white max-w-2xl mx-auto mb-14 leading-relaxed font-light tracking-wide drop-shadow-lg">
+            Exclusive, meticulously curated itineraries for sacred pilgrimages and breathtaking global escapes.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="{% url 'tours:packages_list' %}" class="bg-goldAccent text-emeraldDeep px-12 py-5 rounded-full font-bold uppercase tracking-[0.2em] hover:bg-white hover:scale-105 hover:shadow-[0_0_40px_rgba(197,168,128,0.4)] transition-all duration-500 w-full sm:w-auto text-center text-sm">
+                Explore Packages
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- NEW SECTION 1: THE ZAM ZAM PROMISE (Values) -->
+<section class="bg-beigeWarm pt-24 pb-12 px-6 relative z-10">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div class="reveal-on-scroll delay-100 flex flex-col items-center text-center group">
+            <div class="w-16 h-16 rounded-full border border-goldAccent/30 flex items-center justify-center mb-6 group-hover:bg-goldAccent transition-colors duration-500">
+                <svg class="w-6 h-6 text-emeraldDeep group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-sm font-bold uppercase tracking-[0.2em] text-emeraldDeep mb-3">Global Expertise</h3>
+            <p class="text-sm text-gray-500 font-light leading-relaxed">Decades of experience navigating international logistics with precision.</p>
+        </div>
+        <div class="reveal-on-scroll delay-200 flex flex-col items-center text-center group">
+            <div class="w-16 h-16 rounded-full border border-goldAccent/30 flex items-center justify-center mb-6 group-hover:bg-goldAccent transition-colors duration-500">
+                <svg class="w-6 h-6 text-emeraldDeep group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+            </div>
+            <h3 class="text-sm font-bold uppercase tracking-[0.2em] text-emeraldDeep mb-3">5-Star Standards</h3>
+            <p class="text-sm text-gray-500 font-light leading-relaxed">Partnered with the world's finest hotels steps away from the Haram.</p>
+        </div>
+        <div class="reveal-on-scroll delay-300 flex flex-col items-center text-center group">
+            <div class="w-16 h-16 rounded-full border border-goldAccent/30 flex items-center justify-center mb-6 group-hover:bg-goldAccent transition-colors duration-500">
+                <svg class="w-6 h-6 text-emeraldDeep group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            </div>
+            <h3 class="text-sm font-bold uppercase tracking-[0.2em] text-emeraldDeep mb-3">Absolute Security</h3>
+            <p class="text-sm text-gray-500 font-light leading-relaxed">Your safety, visas, and health requirements are managed flawlessly.</p>
+        </div>
+        <div class="reveal-on-scroll delay-400 flex flex-col items-center text-center group">
+            <div class="w-16 h-16 rounded-full border border-goldAccent/30 flex items-center justify-center mb-6 group-hover:bg-goldAccent transition-colors duration-500">
+                <svg class="w-6 h-6 text-emeraldDeep group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
+            </div>
+            <h3 class="text-sm font-bold uppercase tracking-[0.2em] text-emeraldDeep mb-3">Bespoke Care</h3>
+            <p class="text-sm text-gray-500 font-light leading-relaxed">Dedicated VIP concierges available 24/7 throughout your journey.</p>
+        </div>
+    </div>
+</section>
+
+<!-- 2. EDITORIAL / PROMISE SECTION (Existing - Adapted) -->
+<section class="bg-beigeWarm py-24 px-6 overflow-hidden relative z-10">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div class="reveal-on-scroll lg:pr-10">
+            <span class="text-emeraldLight tracking-[0.2em] text-xs uppercase font-bold mb-4 block">The Zam Zam Heritage</span>
+            <h2 class="text-4xl md:text-6xl font-serif font-bold text-emeraldDeep mb-8 leading-tight">Elevating The <br/>Art of Travel.</h2>
+            <div class="w-24 h-1 bg-goldAccent mb-10 rounded-full"></div>
+            <p class="text-gray-600 text-lg md:text-xl leading-relaxed mb-8 font-light">
+                We believe that every journey should transcend the ordinary. Whether embarking on a sacred pilgrimage to Mecca or exploring the historic streets of Europe, our dedicated concierges ensure every detail is handled with absolute precision.
+            </p>
+            <a href="#contact" class="inline-flex items-center text-emeraldDeep font-bold uppercase tracking-widest text-sm hover:text-goldAccent transition-colors group mt-4">
+                Meet Our Advisors 
+                <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+        </div>
+        
+        <div class="relative w-full h-[500px] md:h-[600px] reveal-on-scroll delay-200 hidden sm:block">
+            <div class="absolute top-0 right-0 w-3/4 h-4/5 bg-emeraldLight rounded-[2.5rem] shadow-2xl overflow-hidden transform transition-transform duration-1000 hover:scale-105">
+                <div class="w-full h-full bg-gradient-to-br from-emeraldDeep to-emeraldLight opacity-50"></div>
+            </div>
+            <div class="absolute bottom-0 left-0 w-3/5 h-3/5 bg-white rounded-[2rem] shadow-2xl overflow-hidden border-8 border-beigeWarm transform transition-transform duration-1000 hover:scale-105 z-10 flex items-center justify-center">
+                 <span class="text-goldAccent font-serif text-2xl opacity-50">Premium Stays</span>
+            </div>
+            <div class="absolute top-1/2 left-10 w-20 h-20 bg-goldAccent/20 rounded-full blur-2xl z-0"></div>
+        </div>
+    </div>
+</section>
+
+<!-- NEW SECTION 2: CURATED DESTINATIONS (Asymmetric Grid) -->
+<section class="py-32 px-6 bg-beigeDark relative z-10">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20 reveal-on-scroll">
+            <span class="text-emeraldLight tracking-[0.2em] text-xs uppercase font-bold mb-4 block">Where to Next?</span>
+            <h2 class="text-4xl md:text-6xl font-serif font-bold text-emeraldDeep tracking-tight">Curated Regions</h2>
+            <div class="w-24 h-1 bg-goldAccent mt-8 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
+            <!-- Large Card -->
+            <div class="md:col-span-8 relative rounded-[2rem] overflow-hidden group reveal-on-scroll delay-100 h-80 md:h-full">
+                <div class="absolute inset-0 bg-emeraldDeep"></div> <!-- Placeholder for Image -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 p-10 transform transition-transform duration-500 group-hover:-translate-y-4">
+                    <span class="text-goldAccent text-xs font-bold uppercase tracking-[0.3em] block mb-2">The Holy Land</span>
+                    <h3 class="text-4xl font-serif text-white">Makkah & Madinah</h3>
+                </div>
+            </div>
+            <!-- Small Cards Column -->
+            <div class="md:col-span-4 grid grid-rows-2 gap-6 h-[600px] md:h-full">
+                <div class="relative rounded-[2rem] overflow-hidden group reveal-on-scroll delay-200">
+                    <div class="absolute inset-0 bg-emeraldLight"></div> <!-- Placeholder -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8 transform transition-transform duration-500 group-hover:-translate-y-2">
+                        <span class="text-goldAccent text-[10px] font-bold uppercase tracking-[0.3em] block mb-2">Modern Luxury</span>
+                        <h3 class="text-2xl font-serif text-white">Dubai & UAE</h3>
+                    </div>
+                </div>
+                <div class="relative rounded-[2rem] overflow-hidden group reveal-on-scroll delay-300">
+                    <div class="absolute inset-0 bg-goldAccent"></div> <!-- Placeholder -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8 transform transition-transform duration-500 group-hover:-translate-y-2">
+                        <span class="text-emeraldLight text-[10px] font-bold uppercase tracking-[0.3em] block mb-2">Classic Heritage</span>
+                        <h3 class="text-2xl font-serif text-white">Europe & Turkey</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. FEATURED PACKAGES (Existing - Integrated) -->
+<section id="packages" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 bg-beigeWarm relative z-10">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal-on-scroll">
+        <div>
+            <span class="text-emeraldLight tracking-[0.2em] text-xs uppercase font-bold mb-4 block">Exclusive Escapes</span>
+            <h2 class="text-5xl md:text-6xl font-serif font-bold text-gray-900 tracking-tight">Featured Itineraries</h2>
+            <div class="w-32 h-1 bg-goldAccent mt-8 rounded-full"></div>
+        </div>
+        <a href="{% url 'tours:packages_list' %}" class="hidden md:inline-flex items-center text-emeraldDeep font-bold uppercase tracking-widest text-sm hover:text-goldAccent transition-colors group">
+            View All Experiences <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        {% for package in packages %}
+        <div class="reveal-on-scroll {% if forloop.counter == 1 %}delay-100{% elif forloop.counter == 2 %}delay-200{% else %}delay-300{% endif %}">
+            <div class="group bg-white rounded-[2.5rem] shadow-xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] transition-all duration-700 hover:-translate-y-4 flex flex-col h-full border border-gray-100 overflow-hidden relative">
+                
+                <div class="h-80 bg-gray-100 relative overflow-hidden">
+                    {% if package.cover_image %}
+                        <img src="{{ package.cover_image.url }}" alt="{{ package.title }}" class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110 group-hover:rotate-1">
+                    {% endif %}
+                    <div class="absolute top-6 left-6 backdrop-blur-xl bg-black/30 border border-white/20 text-white text-xs uppercase font-bold tracking-[0.2em] px-5 py-2.5 rounded-full z-10">
+                        {{ package.category.name }}
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+
+                <div class="p-10 flex-grow flex flex-col justify-between bg-white relative z-20 -mt-6 rounded-t-[2.5rem]">
+                    <div>
+                        <div class="flex items-center text-xs font-bold text-goldAccent uppercase tracking-[0.2em] mb-4">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            {{ package.duration_days }} Days
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-gray-900 mb-4 group-hover:text-emeraldDeep transition-colors leading-snug">{{ package.title }}</h3>
+                    </div>
+                    
+                    <div class="flex justify-between items-center pt-8 mt-6 border-t border-gray-100">
+                        <div>
+                            <span class="text-xs text-gray-400 block uppercase tracking-[0.2em] mb-1">Starting From</span>
+                            <span class="text-3xl font-serif font-bold text-emeraldDeep">₹{{ package.price }}</span>
+                        </div>
+                        <a href="{% url 'tours:package_detail' package.pk %}" class="w-12 h-12 rounded-full bg-beigeDark flex items-center justify-center group-hover:bg-goldAccent group-hover:text-white transition-colors duration-300 transform group-hover:rotate-45">
+                            <svg class="w-5 h-5 text-emeraldDeep group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- NEW SECTION 3: THE VIP EXPERIENCE (Dark Mode Interlude) -->
+<section class="py-32 px-6 bg-emeraldDeep text-beigeWarm relative z-10 overflow-hidden">
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-goldAccent/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div class="grid grid-cols-2 gap-6 reveal-on-scroll delay-100">
+            <div class="bg-white/5 border border-white/10 p-8 rounded-[2rem] backdrop-blur-sm">
+                <svg class="w-10 h-10 text-goldAccent mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <h4 class="font-serif text-2xl mb-2">Visas & Flights</h4>
+                <p class="text-sm text-beigeWarm/60 font-light">Seamless global ticketing and expedited Umrah/Hajj visa processing.</p>
+            </div>
+            <div class="bg-white/5 border border-white/10 p-8 rounded-[2rem] backdrop-blur-sm mt-12">
+                <svg class="w-10 h-10 text-goldAccent mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                <h4 class="font-serif text-2xl mb-2">Luxury Stays</h4>
+                <p class="text-sm text-beigeWarm/60 font-light">Exclusive rates at Fairmont, Swissôtel, and Clock Royal Tower.</p>
+            </div>
+        </div>
+        <div class="reveal-on-scroll delay-200">
+            <span class="text-goldAccent tracking-[0.2em] text-xs uppercase font-bold mb-4 block">End-to-End Service</span>
+            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-8 leading-tight">We Handle the Logistics. <br/><span class="font-light italic text-beigeWarm/80">You Focus on the Journey.</span></h2>
+            <p class="text-lg text-beigeWarm/70 font-light leading-relaxed mb-10">
+                Traveling across borders requires immense planning. Our in-house visa department, luxury fleet of vehicles, and airline partnerships mean you never have to worry about the details.
+            </p>
+            <a href="{% url 'tours:tailor_made' %}" class="inline-block bg-goldAccent text-emeraldDeep px-14 py-5 rounded-full font-bold uppercase tracking-[0.2em] hover:bg-white hover:shadow-[0_0_40px_rgba(197,168,128,0.4)] transition-all duration-500 hover:-translate-y-1 text-sm">
+    Inquire Now
+</a>
+        </div>
+    </div>
+</section>
+
+<!-- NEW SECTION 4: GUEST CHRONICLES (Testimonials) -->
+<section class="py-32 px-6 bg-beigeDark relative z-10">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20 reveal-on-scroll">
+            <span class="text-emeraldLight tracking-[0.2em] text-xs uppercase font-bold mb-4 block">Guest Chronicles</span>
+            <h2 class="text-4xl md:text-5xl font-serif font-bold text-emeraldDeep tracking-tight">Words from our Pilgrims</h2>
+            <div class="w-16 h-1 bg-goldAccent mt-8 mx-auto rounded-full"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-white p-12 rounded-[2rem] shadow-lg border border-gray-100 reveal-on-scroll delay-100 relative">
+                <div class="absolute top-8 right-8 text-goldAccent/20 font-serif text-8xl leading-none">"</div>
+                <div class="flex text-goldAccent mb-6 space-x-1">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <p class="text-gray-600 font-light leading-relaxed mb-8 relative z-10 italic">
+                    "Zam Zam Tours took care of everything for our family's Umrah. From the VIP bus transfers to the hotel view of the Kaaba, it was entirely stress-free."
+                </p>
+                <div>
+                    <h4 class="font-bold text-emeraldDeep uppercase tracking-widest text-[10px]">Ayesha M.</h4>
+                    <span class="text-xs text-gray-400">London, UK</span>
+                </div>
+            </div>
+            <!-- Testimonial 2 -->
+            <div class="bg-white p-12 rounded-[2rem] shadow-lg border border-gray-100 reveal-on-scroll delay-200 relative">
+                <div class="absolute top-8 right-8 text-goldAccent/20 font-serif text-8xl leading-none">"</div>
+                <div class="flex text-goldAccent mb-6 space-x-1">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <p class="text-gray-600 font-light leading-relaxed mb-8 relative z-10 italic">
+                    "Exceptional service. We booked the 14-day European escape and the luxury accommodations exceeded our expectations. Highly recommended."
+                </p>
+                <div>
+                    <h4 class="font-bold text-emeraldDeep uppercase tracking-widest text-[10px]">Omar K.</h4>
+                    <span class="text-xs text-gray-400">Dubai, UAE</span>
+                </div>
+            </div>
+            <!-- Testimonial 3 -->
+            <div class="bg-white p-12 rounded-[2rem] shadow-lg border border-gray-100 reveal-on-scroll delay-300 relative">
+                <div class="absolute top-8 right-8 text-goldAccent/20 font-serif text-8xl leading-none">"</div>
+                <div class="flex text-goldAccent mb-6 space-x-1">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <p class="text-gray-600 font-light leading-relaxed mb-8 relative z-10 italic">
+                    "The meticulous planning and support from the team gave us peace of mind. Truly the benchmark for premium travel in India."
+                </p>
+                <div>
+                    <h4 class="font-bold text-emeraldDeep uppercase tracking-widest text-[10px]">Fatima S.</h4>
+                    <span class="text-xs text-gray-400">Ahmedabad, IN</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEW SECTION 5: YOUR PRIVATE CONCIERGE (Editorial Trust Section) -->
+<section class="bg-beigeWarm py-24 px-6 overflow-hidden relative z-10 border-t border-goldAccent/10">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <!-- Image Left (Reversed layout from Section 2) -->
+        <div class="relative w-full h-[500px] md:h-[600px] reveal-on-scroll hidden sm:block">
+            <div class="absolute top-0 left-0 w-3/4 h-4/5 bg-goldAccent/20 rounded-[2.5rem] shadow-2xl overflow-hidden transform transition-transform duration-1000 hover:scale-105">
+                <div class="w-full h-full bg-gradient-to-br from-beigeDark to-goldAccent opacity-50"></div>
+            </div>
+            <div class="absolute bottom-0 right-0 w-3/5 h-3/5 bg-white rounded-[2rem] shadow-2xl overflow-hidden border-8 border-beigeWarm transform transition-transform duration-1000 hover:scale-105 z-10 flex items-center justify-center">
+                 <span class="text-emeraldDeep font-serif text-2xl opacity-50">24/7 Support</span>
+            </div>
+        </div>
+        
+        <div class="reveal-on-scroll delay-200">
+            <span class="text-emeraldLight tracking-[0.2em] text-xs uppercase font-bold mb-4 block">Unmatched Dedication</span>
+            <h2 class="text-4xl md:text-6xl font-serif font-bold text-emeraldDeep mb-8 leading-tight">Your Private <br/>Concierge.</h2>
+            <div class="w-24 h-1 bg-goldAccent mb-10 rounded-full"></div>
+            <p class="text-gray-600 text-lg md:text-xl leading-relaxed mb-8 font-light">
+                From the moment you inquire to the day you return home, a dedicated Zam Zam travel advisor is assigned to your account.
+            </p>
+            <ul class="space-y-4 mb-10 text-gray-600 font-light">
+                <li class="flex items-center"><svg class="w-5 h-5 text-goldAccent mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Direct WhatsApp access 24/7</li>
+                <li class="flex items-center"><svg class="w-5 h-5 text-goldAccent mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Custom dietary and mobility arrangements</li>
+                <li class="flex items-center"><svg class="w-5 h-5 text-goldAccent mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> On-the-ground agents in destination cities</li>
+            </ul>
+            <a href="https://wa.me/919876543210" target="_blank" class="inline-flex items-center bg-emeraldDeep text-beigeWarm font-bold uppercase tracking-widest text-xs px-8 py-4 rounded-full hover:bg-goldAccent hover:text-emeraldDeep transition-all duration-300 shadow-xl">
+                Chat With Us Now
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- NEW SECTION 6: THE GRAND FINALE (CTA Banner) -->
+<section class="py-32 px-6 relative z-10 overflow-hidden flex justify-center items-center">
+    <div class="absolute inset-0 bg-emeraldDeep z-0"></div>
+    <!-- Pattern overlay -->
+    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#c5a880_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-goldAccent/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
+
+    <div class="max-w-4xl mx-auto text-center relative z-10 reveal-on-scroll">
+        <h2 class="text-5xl md:text-7xl font-serif font-bold text-white mb-8 tracking-tight">Begin Your Journey</h2>
+        <p class="text-xl text-beigeWarm/80 font-light mb-12 max-w-2xl mx-auto">
+            Contact us today to start designing your tailor-made experience or secure your spot on one of our exclusive group departures.
+        </p>
+        <a href="#contact" class="inline-block bg-goldAccent text-emeraldDeep px-14 py-5 rounded-full font-bold uppercase tracking-[0.2em] hover:bg-white hover:shadow-[0_0_40px_rgba(197,168,128,0.4)] transition-all duration-500 hover:-translate-y-1 text-sm">
+            Inquire Now
+        </a>
+    </div>
+</section>
+
+<!-- Scroll Reveal Script -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15 
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        revealElements.forEach(el => observer.observe(el));
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        will-change: opacity, transform;
+    }
+    .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Premium styling for the select dropdowns to remove default ugly OS styling */
+    select.boutique-select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23043927' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: 1em;
+        padding-right: 1.5em;
+    }
+</style>
+
+<!-- Hero Section -->
+<section id="hero-section" class="relative text-beigeWarm py-32 sm:py-40 md:py-48 px-6 overflow-hidden transition-colors duration-1000 bg-emeraldDeep flex flex-col justify-center border-b border-white/10">
+    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/20 pointer-events-none"></div>
+    <div class="absolute -top-32 -right-32 w-96 h-96 bg-goldAccent/10 rounded-full blur-[100px] pointer-events-none"></div>
+    
+    <div class="max-w-5xl mx-auto text-center relative z-10 reveal-on-scroll is-visible">
+        <!-- Toggle Switch -->
+        <div class="backdrop-blur-xl bg-white/5 p-1.5 rounded-full inline-flex relative shadow-2xl mb-10 sm:mb-12 border border-white/10">
+            <button id="btn-religious" type="button" onclick="switchMode('religious')" class="relative z-10 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-widest transition-all duration-500 bg-goldAccent text-emeraldDeep shadow-lg">
+                Hajj & Umrah
+            </button>
+            <button id="btn-leisure" type="button" onclick="switchMode('leisure')" class="relative z-10 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-widest transition-all duration-500 text-white/80 hover:text-goldAccent">
+                Global Escapes
+            </button>
+        </div>
+
+        <h1 id="hero-title" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold mt-2 mb-6 leading-tight tracking-tight transition-all duration-700 drop-shadow-2xl">
+            Sacred Pilgrimages
+        </h1>
+        <p id="hero-subtitle" class="text-base sm:text-lg md:text-xl text-beigeWarm/80 max-w-2xl mx-auto leading-relaxed transition-all duration-700 font-light tracking-wide px-4">
+            Filter our exclusive itineraries to find your perfect journey.
+        </p>
+    </div>
+</section>
+
+<!-- MASTER FILTER FORM -->
+<form id="filter-form" method="GET" action="{% url 'tours:packages_list' %}">
+
+    <!-- Premium Floating Filter Bar -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-30 -mt-8 sm:-mt-10 reveal-on-scroll delay-100 hidden md:block">
+        <div class="bg-white/95 backdrop-blur-xl rounded-full shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100 p-2 flex justify-between items-center">
+            <div class="flex space-x-2 divide-x divide-gray-200 w-full pl-6">
+                
+                <!-- Destination Search -->
+                <div class="px-4 py-2 w-1/3 group">
+                    <label class="block text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-1">Destination</label>
+                    <input type="text" name="destination" value="{{ current_destination }}" placeholder="e.g. Makkah, Europe..." 
+                           class="w-full bg-transparent border-none focus:outline-none text-emeraldDeep font-serif text-lg placeholder-emeraldDeep/30 transition-colors">
+                </div>
+                
+                <!-- Duration Dropdown -->
+                <div class="px-4 py-2 w-1/3 group">
+                    <label class="block text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-1">Duration</label>
+                    <select name="duration" class="boutique-select w-full bg-transparent border-none focus:outline-none text-emeraldDeep font-serif text-lg cursor-pointer transition-colors">
+                        <option value="">Any Length</option>
+                        <option value="short" {% if current_duration == 'short' %}selected{% endif %}>1 - 7 Days</option>
+                        <option value="medium" {% if current_duration == 'medium' %}selected{% endif %}>8 - 14 Days</option>
+                        <option value="long" {% if current_duration == 'long' %}selected{% endif %}>15+ Days</option>
+                    </select>
+                </div>
+                
+                <!-- Max Price -->
+                <div class="px-4 py-2 w-1/3 group relative">
+                    <label class="block text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-1">Budget (Max)</label>
+                    <div class="flex items-center">
+                        <span class="text-emeraldDeep font-serif text-lg mr-1">₹</span>
+                        <input type="number" name="max_price" value="{{ current_max_price }}" placeholder="Unlimited" 
+                               class="w-full bg-transparent border-none focus:outline-none text-emeraldDeep font-serif text-lg placeholder-emeraldDeep/30 transition-colors">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="bg-emeraldDeep text-goldAccent p-4 rounded-full hover:bg-goldAccent hover:text-emeraldDeep transition-all shadow-md shrink-0 ml-2 transform hover:scale-105">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Full Package Catalog -->
+    <section id="packages" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-beigeWarm min-h-[50vh]">
+        
+        <!-- Results Counter & SORT BY Dropdown -->
+        <div class="flex justify-between items-center mb-10 border-b border-gray-200 pb-4 reveal-on-scroll">
+            <span class="text-sm font-bold text-gray-400 uppercase tracking-[0.2em]"><span class="text-emeraldDeep">{{ packages|length }}</span> Itineraries Found</span>
+            
+            <div class="flex items-center">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-[0.1em] mr-2 hidden sm:inline-block">Sort By:</span>
+                <select name="sort" onchange="this.form.submit()" class="boutique-select bg-transparent text-emeraldDeep text-xs font-bold uppercase tracking-[0.1em] cursor-pointer outline-none hover:text-goldAccent transition-colors">
+                    <option value="featured" {% if current_sort == 'featured' %}selected{% endif %}>Featured</option>
+                    <option value="price_low" {% if current_sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                    <option value="price_high" {% if current_sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                    <option value="duration_short" {% if current_sort == 'duration_short' %}selected{% endif %}>Duration: Shortest</option>
+                    <option value="duration_long" {% if current_sort == 'duration_long' %}selected{% endif %}>Duration: Longest</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12" id="package-grid">
+            {% for package in packages %}
+            {% with cat=package.category.name|lower %}
+            <div class="reveal-on-scroll package-card {% if cat == 'hajj' or cat == 'umrah' %}card-religious{% else %}card-leisure{% endif %}" style="display: flex;">
+                <div class="group bg-white rounded-[2rem] shadow-xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] transition-all duration-700 hover:-translate-y-4 flex-col h-full border border-gray-100 overflow-hidden w-full relative">
+                    
+                    <div class="h-64 sm:h-72 bg-gray-100 relative overflow-hidden">
+                        {% if package.cover_image %}
+                            <img src="{{ package.cover_image.url }}" alt="{{ package.title }}" class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110">
+                        {% else %}
+                            <div class="w-full h-full bg-emeraldDeep/10 flex items-center justify-center">
+                                <span class="text-emeraldDeep/30 font-serif text-xl sm:text-2xl">Zam Zam Tours</span>
+                            </div>
+                        {% endif %}
+                        <span class="absolute top-5 left-5 sm:top-6 sm:left-6 backdrop-blur-md bg-black/40 border border-white/20 text-goldAccent text-[10px] uppercase font-bold tracking-[0.2em] px-4 py-2 rounded-full z-10">
+                            {{ package.category.name }}
+                        </span>
+                        <!-- Wishlist Heart -->
+                        <button type="button" class="absolute top-5 right-5 sm:top-6 sm:right-6 w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 text-white hover:text-red-500 hover:bg-white transition-all z-10">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                        </button>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+
+                    <div class="p-8 flex-grow flex flex-col justify-between bg-white relative z-20 -mt-4 rounded-t-[2rem]">
+                        <div>
+                            <div class="flex items-center text-[10px] font-bold text-goldAccent uppercase tracking-[0.2em] mb-4">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                {{ package.duration_days }} Days
+                            </div>
+                            <h3 class="text-2xl font-serif font-bold text-gray-900 mb-3 group-hover:text-emeraldDeep transition-colors leading-snug">{{ package.title }}</h3>
+                            
+                            <!-- Mini Inclusions List -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-emeraldDeep bg-emeraldDeep/5 px-2.5 py-1 rounded-sm">Premium Stays</span>
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-emeraldDeep bg-emeraldDeep/5 px-2.5 py-1 rounded-sm">Visa Included</span>
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-emeraldDeep bg-emeraldDeep/5 px-2.5 py-1 rounded-sm">VIP Transfer</span>
+                            </div>
+                            
+                            <p class="text-sm text-gray-500 line-clamp-2 mb-8 leading-relaxed font-light">{{ package.description }}</p>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pt-6 border-t border-gray-100">
+                            <div>
+                                <span class="text-[10px] text-gray-400 block uppercase tracking-[0.2em] mb-1">Starting From</span>
+                                <span class="text-xl sm:text-2xl font-serif font-bold text-emeraldDeep">₹{{ package.price }}</span>
+                            </div>
+                            <a href="{% url 'tours:package_detail' package.pk %}" class="w-12 h-12 rounded-full bg-beigeDark flex items-center justify-center group-hover:bg-goldAccent group-hover:text-white transition-colors duration-300 transform group-hover:rotate-45">
+                                <svg class="w-5 h-5 text-emeraldDeep group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+        </div>
+        
+        <div id="empty-state" class="hidden flex-col items-center justify-center py-20 sm:py-32 text-center w-full bg-white rounded-[2rem] sm:rounded-[3rem] border border-gray-100 shadow-sm mt-10 px-6 reveal-on-scroll">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6 shadow-inner">
+                <svg class="w-8 h-8 sm:w-10 sm:h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-serif font-bold text-gray-900 mb-3">Expanding Our Horizons</h3>
+            <p class="text-sm sm:text-base text-gray-500 max-w-md mx-auto leading-relaxed font-light">We couldn't find an exact match for your search. Try adjusting your filters or explore our tailor-made journeys below.</p>
+        </div>
+    </section>
+</form>
+
+<!-- Tailor-Made CTA Section -->
+<section class="py-24 px-6 bg-emeraldDeep text-beigeWarm relative z-20 overflow-hidden border-t border-goldAccent/30">
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-goldAccent/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="max-w-5xl mx-auto text-center relative reveal-on-scroll">
+        <span class="text-goldAccent tracking-[0.3em] text-[10px] sm:text-xs uppercase font-bold mb-6 block">Bespoke Travel Design</span>
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-8 leading-tight">Don't see your perfect itinerary?</h2>
+        <p class="text-lg text-beigeWarm/70 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
+            Our luxury travel designers specialize in creating entirely custom journeys. From private jets to exclusive access at the Haram, let us craft an experience uniquely yours.
+        </p>
+        <a href="{% url 'tours:tailor_made' %}" class="inline-flex items-center bg-goldAccent text-emeraldDeep px-10 py-4 rounded-full font-bold uppercase tracking-[0.2em] hover:bg-white hover:shadow-[0_0_30px_rgba(197,168,128,0.4)] transition-all duration-300 transform hover:-translate-y-1 text-xs">
+    Build a Custom Journey
+</a>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        window.observeCards = function() {
+            const revealElements = document.querySelectorAll('.reveal-on-scroll:not(.is-visible)');
+            revealElements.forEach(el => observer.observe(el));
+        };
+        
+        observeCards();
+    });
+
+    function switchMode(mode) {
+        const religiousCards = document.querySelectorAll('.card-religious');
+        const leisureCards = document.querySelectorAll('.card-leisure');
+        const heroSection = document.getElementById('hero-section');
+        const heroTitle = document.getElementById('hero-title');
+        const btnReligious = document.getElementById('btn-religious');
+        const btnLeisure = document.getElementById('btn-leisure');
+        const emptyState = document.getElementById('empty-state');
+        const mainNav = document.getElementById('main-nav');
+        const mainFooter = document.getElementById('main-footer');
+
+        let visibleCount = 0;
+
+        document.querySelectorAll('.package-card').forEach(el => el.classList.remove('is-visible'));
+
+        if (mode === 'religious') {
+            religiousCards.forEach(c => { c.style.display = 'flex'; visibleCount++; });
+            leisureCards.forEach(c => c.style.display = 'none');
+            
+            btnReligious.classList.add('bg-goldAccent', 'text-emeraldDeep', 'shadow-lg');
+            btnReligious.classList.remove('text-white/80', 'hover:text-goldAccent');
+            btnLeisure.classList.remove('bg-goldAccent', 'text-slate-900', 'shadow-lg');
+            btnLeisure.classList.add('text-white/80', 'hover:text-goldAccent');
+
+            heroSection.classList.add('bg-emeraldDeep');
+            heroSection.classList.remove('bg-slate-900');
+            if(mainNav && mainFooter) {
+                mainNav.classList.add('bg-emeraldDeep'); mainNav.classList.remove('bg-slate-900');
+                mainFooter.classList.add('bg-emeraldDeep'); mainFooter.classList.remove('bg-slate-900');
+            }
+            heroTitle.innerText = "Sacred Pilgrimages";
+
+        } else {
+            religiousCards.forEach(c => c.style.display = 'none');
+            leisureCards.forEach(c => { c.style.display = 'flex'; visibleCount++; });
+            
+            btnLeisure.classList.add('bg-goldAccent', 'text-slate-900', 'shadow-lg');
+            btnLeisure.classList.remove('text-white/80', 'hover:text-goldAccent');
+            btnReligious.classList.remove('bg-goldAccent', 'text-emeraldDeep', 'shadow-lg');
+            btnReligious.classList.add('text-white/80', 'hover:text-goldAccent');
+
+            heroSection.classList.remove('bg-emeraldDeep');
+            heroSection.classList.add('bg-slate-900');
+            if(mainNav && mainFooter) {
+                mainNav.classList.remove('bg-emeraldDeep'); mainNav.classList.add('bg-slate-900');
+                mainFooter.classList.remove('bg-emeraldDeep'); mainFooter.classList.add('bg-slate-900');
+            }
+            heroTitle.innerText = "Global Horizons";
+        }
+
+        if (visibleCount === 0 && document.querySelectorAll('.package-card').length > 0) {
+            emptyState.classList.remove('hidden'); emptyState.classList.add('flex');
+            setTimeout(() => { if(window.observeCards) window.observeCards(); }, 100);
+        } else {
+            emptyState.classList.add('hidden'); emptyState.classList.remove('flex');
+            setTimeout(() => { if(window.observeCards) window.observeCards(); }, 100);
+        }
+    }
+
+    // Default to religious, but if they just searched, check which cards are actually visible
+    document.addEventListener('DOMContentLoaded', () => {
+        // If there are no results at all from backend search, show empty state
+        if(document.querySelectorAll('.package-card').length === 0) {
+            document.getElementById('empty-state').classList.remove('hidden');
+            document.getElementById('empty-state').classList.add('flex');
+        } else {
+            switchMode('religious');
+        }
+    });
+</script>
+
+{% endblock %}
